@@ -258,7 +258,7 @@ def print_gamess_input(step_total, n, dist, scf, dt, coord, label, molt, vel_ms)
 
 
 def print_riepilogo(n, b, angle):
-    with open("riepilogo_traj", "a") as f:
+    with open("summ_traj", "a") as f:
         f.write("Traj= {} ,b= {} ,angle= {} {} {}\n".format(n, round(b, 2), round(angle[0], 2), round(angle[1], 2), round(angle[2], 2)))
 
 
