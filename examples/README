@@ -1,0 +1,13 @@
+----
+Examples: 
+
+----COLLISION
+
+>> H2 + H    [GAMESS/DFTB+]
+>> Prop + OH [DFTB+]
+>> OH + H2   [GAMESS/DFTB+]
+
+
+----MS
+
+>> UracilH+ + N2 [DFTB+]

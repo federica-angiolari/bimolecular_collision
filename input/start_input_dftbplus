@@ -1,0 +1,16 @@
+path_file_target: 
+path_file_proiettile:  
+distanza_Angstrom: 
+b_max_Angstrom: 
+db_Angstrom: 
+numero_angoli: 
+temperatura_rotovibrazionale_target_Kelvin: 
+temperatura_rotovibrazionale_proiettile_Kelvin: 
+energia_di_collisione_eV: 
+dt_fs: 
+step_to_add:
+path_programma: 
+path_SKF: 
+carica_sistema:  
+temperatura_di_convergenza: 
+numero_di_spin_spaiati: 
