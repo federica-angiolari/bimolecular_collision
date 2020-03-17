@@ -60,10 +60,14 @@ If you want change parameters such as atom's masses or parameters for sk files, 
 HOW IT WORKS
 
 The code is really simple. There are two different input:
+
 a) input_dftb+
 b) input_gamess
+
 It depends on the external program you will use. When you'll write on it, you must consider ONE SPACE after ":". So for example, in the first row of input_*:
+
 path_target: /dir/target.xyz 
+
 You'll have to write the path of your molecules (in xyz format, already OPTIMIZED), the distance [Angstrom], the limit of impact factor and the impact factor [Angstrom], number angles of target's rotation, vibro-rotation temperature [Kelvin] for both molecule, collision energy[kcal/mol for GAMESS and eV for DFTB+] in CM frame, dt, steps to add (the script calculate min step for collision), path of external program, and other parameters for the external program.
 
 After you have prepared the input you can launch the code (look next section, HOW TO USE & MOD). At this point (if everything is correct), you'll see some printed sentences on screen such as "Number Dynamic: X": this means that the external program is doing the dynamic. Of course, you can check always the job, since the output of the external program is not printed on the screen, it is saved in an external file ("output_program"). When the dynamic be finishes it will be printed on screen "Traject Analyse: X", so this means that the code it's running the analysis. When the code is finished, it will exit automatically. You'll have in your working dir different files of output, that we will see in next section.
@@ -87,33 +91,57 @@ c)python start.py GAMESS coll
 
 a) and c): the external program is DFTB+ and GAMESS. 
 OUTPUT:
-- before dynamic
+- before dynamic:
+
   geometry_i.xyz:  0<i<num_tot_traj. Initial geometry. There will be n geometry for each impact factor, that will have the target in different orientations. This format xyz is faster to check the geometry, since it's easy to read.
-  geometry_i.gen:   0<i<num_tot_traj. Format read by DFTB+, initial geometry
-  VELOC.DAT: file for initial velocities for DFTB+, in m/s
+  
+  geometry_i.gen:   0<i<num_tot_traj. Format read by DFTB+, initial geometry.
+  
+  VELOC.DAT: file for initial velocities for DFTB+, in m/s.
+  
   riepilogo_traj:  there are written all the number of initial geometries, with their impact factor(b) and target's angles orientation.
-  dftb_in.hsd: input file for dynamic DFTB+
-  geometry_i.inp: format for input for GAMESS. It has everything!(Velocities [bohr/ps], coordinates, and input for dynamic part)
-  after dynamic
-  NVE_i.xyz: trajectories file from DFTB+
-  md_i.out: trajectories's information file from DFTB+
-  geometry_i.trj: trajectories file from GAMESS
-  en_pot_i: potential energy graphic during dynamic. The unit choosen are the default for external program
+  
+  dftb_in.hsd: input file for dynamic DFTB+.
+  
+  geometry_i.inp: format for input for GAMESS. It has everything!(Velocities [bohr/ps], coordinates, and input for dynamic part).
+  
+- after dynamic:
+
+  NVE_i.xyz: trajectories file from DFTB+.
+  
+  md_i.out: trajectories's information file from DFTB+.
+  
+  geometry_i.trj: trajectories file from GAMESS.
+  
+  en_pot_i: potential energy graphic during dynamic. The unit choosen are the default for external program.
+  
   out: file with a column, made by "N","Y". It depends on the type of collision. It's in order of your number traj.
-  bi_rotovib_trasf_*, bi_etrasf_trasl_*, bi_etrasf_tot_*: graphic of bi(impact factor) vs energy transfer (%). The energy could be transaltional, roto-vib, or roto-vib+ translational
-  map_3d: file with three columns, represented by vx, vy and vz: final velocities of CM of product
-  angoli_vs_bi: projectile's deviation angle after collision
+  
+  bi_rotovib_trasf_*, bi_etrasf_trasl_*, bi_etrasf_tot_*: graphic of bi(impact factor) vs energy transfer (%). The energy could be transaltional, roto-vib, or roto-vib+ translational.
+  
+  map_3d: file with three columns, represented by vx, vy and vz: final velocities of CM of product.
+  
+  angoli_vs_bi: projectile's deviation angle after collision.
+
 
 There will be written n_angle geometries for ALL the impact factor chosen. Some points to note: first of all the number of angle chosen for target's rotation are RANDOM. If you need some restriction and want to put angles manually, you have to edit "start.py" in "def angle". The b = 0 will not be considered, since the probability for cross section reaction would be NULL for this impact factor.
 
 b): the external program is DFTB+:
-- before dynamic
-See a and c.
-The only difference from the other mod ("collision") is made for initial geometries: there are NO different orientation for target, and the impact factor range is from (-max impact factor) (+max impact factor) and the bi = 0 is considered. 
-- after dynamic
-  spectrum_cation: mass spectrum for cation species
-  spectrum_anion: mass spectrum for anion species
-  spectrum_netrual: mass spectrum for neutrasl species
-  spectrum: mass spectrum for all species
-  Frammenti: there are written all the numbers of traj with associated fragments and their charges
+- before dynamic:
+
+  See a) and c).
+  The only difference from the other mod ("collision") is made for initial geometries: there are NO different orientation for target, and the impact factor range is from (-max impact factor) (+max impact factor) and the bi = 0 is considered. 
+
+- after dynamic:
+
+  spectrum_cation: mass spectrum for cation species.
+  
+  spectrum_anion: mass spectrum for anion species.
+  
+  spectrum_netrual: mass spectrum for neutrasl species.
+  
+  spectrum: mass spectrum for all species.
+  
+  Frammenti: there are written all the numbers of traj with associated fragments and their charges.
+  
   table: table with all fragments generated during all trajectories, with assocciated their charges (as average), occurrence and mass.
