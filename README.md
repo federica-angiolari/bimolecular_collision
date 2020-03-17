@@ -26,24 +26,24 @@ Version: 3.6
 
 -----------PACKAGE'S STRUCTURE
 DIRECTORY:
->>>script:
+- script:
 start.py
 system.py
 analisi_sm.py
 analisi_coll.py
->>>input:
+- input:
 start_input_dftbplus
 start_input_gamess
->>>examples:
->H2+H
->OH+H
->Prop+OH
->ms
+- examples:
+  H2+H
+  OH+H
+  Prop+OH
+  ms
 
 
->>>script: there are all the scripts. They have to be copied in your working dir
->>>input: there are two inputs. It must be chosen considering the external program that you'll use for simulations. It must be copied in working dir
->>>examples: Some useful examples to view output and input file.
+- script: there are all the scripts. They have to be copied in your working dir
+- input: there are two inputs. It must be chosen considering the external program that you'll use for simulations. It must be copied in working dir
+- examples: Some useful examples to view output and input file.
 
 -----------EXTERNAL PROGRAM
 For the simulation part, the code (structured in 4 scripts, located in /script dir) calls external programs: GAMESS or DFTB+. 
@@ -65,10 +65,10 @@ After you have prepared the input you can launch the code (look next section, HO
 
 IMPORTANT: projectile and target must be choosen wisely! The molecule that MUST be rotated is the TARGET. This means this cannot bemade up of only one atom.
 For now, the test was made for these systems (considering AB = Target, and CD or C = Projectile)
->	AB + CD -> A + CDB 
->	AB + CD -> ABC + D
->	AB + C  -> A + CB
->	AB + C  -> ABC
+-	AB + CD -> A + CDB 
+-	AB + CD -> ABC + D
+-	AB + C  -> A + CB
+-	AB + C  -> ABC
 
 
 -----------HOW TO USE & MOD
@@ -83,14 +83,14 @@ c)python start.py GAMESS coll
 
 a) and c): the external program is DFTB+ and GAMESS. 
 OUTPUT:
->>before dynamic
+- before dynamic
 > geometry_i.xyz:  0<i<num_tot_traj. Initial geometry. There will be n geometry for each impact factor, that will have the target in different orientations. This format xyz is faster to check the geometry, since it's easy to read.
 > geometry_i.gen:   0<i<num_tot_traj. Format read by DFTB+, initial geometry
 > VELOC.DAT: file for initial velocities for DFTB+, in m/s
 > riepilogo_traj:  there are written all the number of initial geometries, with their impact factor(b) and target's angles orientation.
 > dftb_in.hsd: input file for dynamic DFTB+
 > geometry_i.inp: format for input for GAMESS. It has everything!(Velocities [bohr/ps], coordinates, and input for dynamic part)
->>after dynamic
+- after dynamic
 > NVE_i.xyz: trajectories file from DFTB+
 > md_i.out: trajectories's information file from DFTB+
 > geometry_i.trj: trajectories file from GAMESS
@@ -103,10 +103,10 @@ OUTPUT:
 There will be written n_angle geometries for ALL the impact factor chosen. Some points to note: first of all the number of angle chosen for target's rotation are RANDOM. If you need some restriction and want to put angles manually, you have to edit "start.py" in "def angle". The b = 0 will not be considered, since the probability for cross section reaction would be NULL for this impact factor.
 
 b): the external program is DFTB+:
->> before dynamic
+- before dynamic
 See a and c.
 The only difference from the other mod ("collision") is made for initial geometries: there are NO different orientation for target, and the impact factor range is from (-max impact factor) (+max impact factor) and the bi = 0 is considered. 
->> after dynamic
+- after dynamic
 >spectrum_cation: mass spectrum for cation species
 >spectrum_anion: mass spectrum for anion species
 >spectrum_netrual: mass spectrum for neutrasl species
