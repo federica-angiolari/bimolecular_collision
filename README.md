@@ -27,9 +27,9 @@ DIRECTORY:
 
   - system.py
 
-  - analisi_sm.py
+  - sm.py
 
-  - analisi_coll.py
+  - coll.py
 
 - input: there are two inputs. It must be chosen considering the external program that you'll use for simulations. It must be copied in working dir
 
@@ -100,7 +100,7 @@ OUTPUT:
   
   - VELOC.DAT: file for initial velocities for DFTB+, in m/s.
   
-  - riepilogo_traj:  there are written all the number of initial geometries, with their impact factor(b) and target's angles orientation.
+  - summ_traj:  there are written all the number of initial geometries, with their impact factor(b) and target's angles orientation.
   
   - dftb_in.hsd: input file for dynamic DFTB+.
   
@@ -118,11 +118,11 @@ OUTPUT:
   
   - out: file with a column, made by "N","Y". It depends on the type of collision. It's in order of your number traj.
   
-  - bi_rotovib_trasf_*, bi_etrasf_trasl_*, bi_etrasf_tot_*: graphic of bi(impact factor) vs energy transfer (%). The energy could be transaltional, roto-vib, or roto-vib+ translational.
+  - bi_rotovib_trasf_*, bi_etrasf_trasl_*, bi_etrasf_tot_*: graphic of bi(impact factor) vs energy transfer (%). The energy could be transaltional, roto-vib, or roto-vib + translational.
   
   - map_3d: file with three columns, represented by vx, vy and vz: final velocities of CM of product.
   
-  - angoli_vs_bi: projectile's deviation angle after collision.
+  - angle_vs_bi: projectile's deviation angle after collision.
 
 
 There will be written n_angle geometries for ALL the impact factor chosen. Some points to note: first of all the number of angle chosen for target's rotation are RANDOM. If you need some restriction and want to put angles manually, you have to edit "start.py" in "def angle". The b = 0 will not be considered, since the probability for cross section reaction would be NULL for this impact factor.
@@ -143,6 +143,6 @@ b): the external program is DFTB+:
   
   - spectrum: mass spectrum for all species.
   
-  - Frammenti: there are written all the numbers of traj with associated fragments and their charges.
+  - Fragments: there are written all the numbers of traj with associated fragments and their charges.
   
   - table: table with all fragments generated during all trajectories, with assocciated their charges (as average), occurrence and mass.
