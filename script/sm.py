@@ -86,7 +86,7 @@ def first_cycle(coord, electrons, label):
         label[index_bond[i]] = 1e20
         electrons[index_bond[i]] = 1e20
     final_charge = count_charge(frammento, electron_bond)
-    with open("Frammenti", "a") as f:
+    with open("Fragments", "a") as f:
         f.write("\n")
         for i in range(0, len(frammento)):
             f.write("{}".format(frammento[i]))
@@ -140,7 +140,7 @@ def frammenti_to_list(framm):
 
 def spettro(mass_tot):
 
-    with open("Frammenti", "r") as f:
+    with open("Fragments", "r") as f:
         lines = f.read().splitlines()
     l_fin = []  
     for i in range(len(lines)):
@@ -276,7 +276,7 @@ def main(num_target, num_traj):
     for k in range(0, num_traj):
         print("Analysis Traj: {}".format(k))
         name_file = str("NVE_{}.xyz".format(k))
-        with open("Frammenti", "a") as f:
+        with open("Fragments", "a") as f:
             f.write("\nTraj: {}\n".format(k))
         total_lines_traj = num_lines_file(name_file)
         coord_matrix = empty_matrix(num_target, 3) 
