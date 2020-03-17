@@ -402,7 +402,7 @@ def angoli(flag, v, label, b_traj):
     theta_2 = math.degrees(theta_2)
     theta_2 = 180-theta_2
     if flag == 'N':
-        with open("angoli_vs_b", "a") as f:
+        with open("angle_vs_b", "a") as f:
             f.write("{}\t{}\n".format(b_traj, theta_2))
     if flag == 'Y':
         with open("map_3d", "a") as f:
@@ -467,7 +467,7 @@ def to_prob(v):
 def main(num_tot_traj, num_atoms, num_p, program, n_angoli):
 
     num_t = num_atoms - num_p
-    b = np.loadtxt("riepilogo_traj", dtype=float, usecols=[3])
+    b = np.loadtxt("summ_traj", dtype=float, usecols=[3])
     for number_ist in range(0, num_tot_traj):
         print("Analysis traj: {}".format(number_ist))
         if program == 'GAMESS':
