@@ -30,22 +30,36 @@ PACKAGE'S STRUCTURE
 DIRECTORY:
 
 - script:
+
 start.py
+
 system.py
+
 analisi_sm.py
+
 analisi_coll.py
+
 - input:
-start_input_dftbplus
-start_input_gamess
+
+  start_input_dftbplus
+
+  start_input_gamess
+
 - examples:
+
   H2+H
+
   OH+H
+
   Prop+OH
+
   ms
 
 
 - script: there are all the scripts. They have to be copied in your working dir
+
 - input: there are two inputs. It must be chosen considering the external program that you'll use for simulations. It must be copied in working dir
+
 - examples: Some useful examples to view output and input file.
 
 EXTERNAL PROGRAM
