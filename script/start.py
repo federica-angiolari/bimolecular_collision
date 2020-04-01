@@ -26,7 +26,7 @@ ms_to_bohrps = 0.018897  # m/s -> bohr/ps
 kcal_to_joule = 4184  # kcal -> J
 ev_to_joule = 1.602176e-19  # eV -> J 
 mass = {"I": 126.9044719e-3, "F": 18.9984032e-3, "C": 12.000e-3, "N": 14.003074e-3, "H": 1.007825032e-3, "O": 15.994914619e-3}  # Kg/mol
-atomic_number = {"H": 1.0, "O": 8.0, "C": 4.0}
+atomic_number = {"H": 1.0, "O": 8.0, "C": 6.0}
 # Value for 3ob-3-1 > input_dftb
 hubbard_der = {"Br":-0.0573, "C":-0.1492, "Ca":-0.0340, "Cl":-0.0697, "F":-0.1623, "H":-0.1857, "I":-0.0433, "K":-0.0339, "Mg":-0.02, "N":-0.1535, "Na":-0.0454, "O":-0.1575, "P":-0.14, "S":-0.11, "Zn":-0.03}
 ang_m = {"Br":"d", "C":"p", "Ca":"p", "Cl":"d", "F":"p", "H":"s", "I":"d", "K":"p", "Mg":"p", "N":"p", "Na":"p", "O":"p", "P":"d", "S":"d", "Zn":"d"}
@@ -207,7 +207,7 @@ def rotation(coord, theta):
     return coord_3
 
 
-def geometries_output(step, count_traj, label_tot, b, distance, coord_targ, coord_bullet, theta, program_used, scf_type, timestep, mult, v):
+def geometries_output(icharge, step, count_traj, label_tot, b, distance, coord_targ, coord_bullet, theta, program_used, scf_type, timestep, mult, v):
     coord_final = empty_matrix(len(label_tot), 3)
     counting_b = 0
     while counting_b < len(b):
@@ -227,16 +227,16 @@ def geometries_output(step, count_traj, label_tot, b, distance, coord_targ, coor
         if program_used == 'DFTB+':
             print_gen(count_traj, coord_final_cm, label_tot)
         elif program_used == 'GAMESS':
-            print_gamess_input(step, count_traj, distance, scf_type, timestep, coord_final_cm, label_tot, mult, v)
+            print_gamess_input(icharge, step, count_traj, distance, scf_type, timestep, coord_final_cm, label_tot, mult, v)
         print_riepilogo(count_traj, b[counting_b], theta)
         count_traj += 1
         counting_b += 1
     return count_traj
 
 
-def print_gamess_input(step_total, n, dist, scf, dt, coord, label, molt, vel_ms):
+def print_gamess_input(icharge, step_total, n, dist, scf, dt, coord, label, molt, vel_ms):
     str1 = " $BASIS GBASIS=N311 NGAUSS=6 NDFUNC=1 NPFUNC=1 DIFFSP=.TRUE. DIFFS=.TRUE. $END"
-    str2 = " $CONTRL MAXIT=200 SCFTYP={} RUNTYP=MD DFTTYP=B3LYP MULT={} $END\n $MD READ=.TRUE. MBT=.FALSE. MBR=.FALSE. TTOTAL=0.000000E+00\n MDINT= VVERLET     DT={}  NVTNH= 0  NSTEPS=   {}\n RSTEMP=.F. DTEMP=   100.00 LEVERY=   10000\n RSRAND=.F. NRAND=  1000 NVTOFF=  0 JEVERY=    10\n PROD=.F.   KEVERY=     1 DELR=   0.020".format(scf, molt, dt, step_total)
+    str2 = " $CONTRL MAXIT=200 SCFTYP={} RUNTYP=MD DFTTYP=B3LYP ICHARG={} MULT={} $END\n $MD READ=.TRUE. MBT=.FALSE. MBR=.FALSE. TTOTAL=0.000000E+00\n MDINT= VVERLET     DT={}  NVTNH= 0  NSTEPS=   {}\n RSTEMP=.F. DTEMP=   100.00 LEVERY=   10000\n RSRAND=.F. NRAND=  1000 NVTOFF=  0 JEVERY=    10\n PROD=.F.   KEVERY=     1 DELR=   0.020".format(scf, icharge, molt, dt, step_total)
 
     v_bohr = empty_matrix(len(coord[0]), 3)
     for i in range(len(coord[0])):
@@ -385,7 +385,8 @@ def main():
         dt = float(dt)
         r_oruhf = str(parameters_list[12])
         mult = int(parameters_list[13])
-        scr_dir = str(parameters_list[14])
+        icharge = int(parameters_list[14])
+        scr_dir = str(parameters_list[15])
         path = 0
         charge = 0
         temp_conv = 0
@@ -441,7 +442,7 @@ def main():
         while r_temp < limit + delta_b:
             b.append(r_temp)
             r_temp += delta_b
-        traj_tot = geometries_output(step,0, atoms_tot, b, d, coord_rotate_t, coord_rotate_b, [0, 0, 0], program, r_oruhf, dt, mult, velocities_m_s)
+        traj_tot = geometries_output(icharge, step,0, atoms_tot, b, d, coord_rotate_t, coord_rotate_b, [0, 0, 0], program, r_oruhf, dt, mult, velocities_m_s)
     elif mod == 'coll':
         r_temp = 0
         while r_temp <= limit:
@@ -457,7 +458,7 @@ def main():
         counting_traj = 0 
         while count_angle < numero_angoli:
             coord_fin_targ = rotation(coord_rotate_t, theta_tot_angles[count_angle])
-            counting_traj = geometries_output(step, counting_traj, atoms_tot, b, d, coord_fin_targ, coord_rotate_b, theta_tot_angles_degrees[count_angle], program, r_oruhf, dt, mult, velocities_m_s)
+            counting_traj = geometries_output(icharge, step, counting_traj, atoms_tot, b, d, coord_fin_targ, coord_rotate_b, theta_tot_angles_degrees[count_angle], program, r_oruhf, dt, mult, velocities_m_s)
             count_angle += 1
         traj_tot = len(b)*numero_angoli
     # Input dftb+
