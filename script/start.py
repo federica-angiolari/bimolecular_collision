@@ -378,6 +378,7 @@ def main():
         charge = int(parameters_list[13])
         temp_conv = float(parameters_list[14])
         spin_spaiati = int(parameters_list[15])
+        icharge = 0
         r_oruhf = 0
         mult = 0
         scr_dir = 0
